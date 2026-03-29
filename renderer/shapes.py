@@ -19,8 +19,6 @@ class Shape:
             print(start, end)
             Shape.line(start, end)
         
-        
-        
     @staticmethod
     def polygon(lines: list[Vector2]) -> None:
         lines.append(lines[0])
