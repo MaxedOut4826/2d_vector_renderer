@@ -13,7 +13,8 @@ class Renderer:
         y = y // 2
         pixel = Renderer.screen_data[y][x]
         
-        Renderer.screen_data[y] = replace_chars(Renderer.screen_data[y], CELL_VALUES[data | CELL_VALUES.index(pixel)], x, 1)
+        bit: str = CELL_VALUES[data | CELL_VALUES.index(pixel)]
+        Renderer.screen_data[y] = replace_chars(Renderer.screen_data[y], bit, x, 1)
                     
     # Bresenham's Line Algorithm
     @staticmethod
