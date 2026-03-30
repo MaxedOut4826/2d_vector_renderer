@@ -1,4 +1,5 @@
 from math import floor
+from sys import stdout
 from . import SCREEN_SIZE, CELL_VALUES, circle_symmetry, clear_screen, replace_chars
 from renderer.shapes import Shape
 
@@ -8,12 +9,14 @@ class Renderer:
         
     @staticmethod
     def draw_pixel(x: int, y: int) -> None:
-        if (0 > x or x > SCREEN_SIZE[0] - 1 or 0 > y or y > SCREEN_SIZE[1] - 1): return    
+        if (0 > x or x > SCREEN_SIZE[0] - 1 or 0 > y or y > SCREEN_SIZE[1] - 1): return
+            
         data = 1 if y % 2 == 0 else 2
         y = y // 2
         pixel = Renderer.screen_data[y][x]
         
         bit: str = CELL_VALUES[data | CELL_VALUES.index(pixel)]
+        
         Renderer.screen_data[y] = replace_chars(Renderer.screen_data[y], bit, x, 1)
                     
     # Bresenham's Line Algorithm
@@ -42,6 +45,7 @@ class Renderer:
                 err += dx
                 y0 += sy
                 
+    # Middlepoint Circle Algorithm
     @staticmethod
     def draw_circle(cx: int, cy: int, r: int) -> None:
         t1: float = r / 16
@@ -74,5 +78,8 @@ class Renderer:
                     
         for xy in Renderer.screen_data:
             Renderer.screen += "".join(xy) + "\n"
+            
+        replace_chars(Renderer.screen_data[16], "I", 27, 1)
         
-        print(Renderer.screen)
+        stdout.write(Renderer.screen)
+        stdout.flush()

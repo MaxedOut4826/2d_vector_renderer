@@ -16,20 +16,17 @@ class Shape:
             return print("Not Enough Arguments Given for Polyline")
         
         for start, end in zip(lines, lines[1:]):
-            print(start, end)
             Shape.line(start, end)
         
     @staticmethod
     def polygon(lines: list[Vector2]) -> None:
         lines.append(lines[0])
         Shape.polyline(lines)
-        print(lines)
             
     @staticmethod
     def rect(start: Vector2, size: Vector2) -> None:
         x0, y0 = start
         x1, y1 = x0 + size[0], y0 + size[1]
-        print(x0, y0, x1, y1)
         
         Shape.polygon([(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
     
