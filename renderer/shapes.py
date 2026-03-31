@@ -39,7 +39,7 @@ class Shape:
         
     @staticmethod
     def curve(vectors: list[Vector2]) -> None:
-        resolution: int = 50
+        resolution: int = 8
         
         points: list[Vector2] = []
         for i in range(0, resolution):
