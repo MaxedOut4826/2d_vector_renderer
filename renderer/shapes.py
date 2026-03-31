@@ -1,4 +1,4 @@
-from . import Vector2, RenderParams
+from . import Vector2, RenderParams, bezier
 
 class Shape:
     render_queue: RenderParams = {"lines": [], "circles": []}
@@ -36,6 +36,21 @@ class Shape:
             'centre': centre,
             'radius': radius
         })
+        
+    @staticmethod
+    def curve(vectors: list[Vector2]) -> None:
+        resolution: int = 50
+        
+        points: list[Vector2] = []
+        for i in range(0, resolution):
+            t = i / (resolution - 1)
+            
+            points.append(bezier(t, vectors))
+                
+        Shape.polyline(points)
+        
 
-
-#! MUST ADD A BEZIER CURVES METHOD / OPTIONAL LINE PARAMETER (PROBS THE LATTER); USES 'De Casteljau's Algorithm TO SUBDIVIDE LINES 
+#* Consider adding a 'move' method to displace a whole shape by a vector delta
+#* Will need to store shapes differently though
+#* The render queue should just take shapes from a shape catalogue
+#* I can then also add methods like 'delete' for shapes and lines based on ID or index

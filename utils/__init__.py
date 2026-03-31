@@ -1,0 +1,1 @@
+from constants.my_types import Vector2

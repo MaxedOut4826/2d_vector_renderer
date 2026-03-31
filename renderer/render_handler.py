@@ -78,8 +78,6 @@ class Renderer:
                     
         for xy in Renderer.screen_data:
             Renderer.screen += "".join(xy) + "\n"
-            
-        replace_chars(Renderer.screen_data[16], "I", 27, 1)
-        
+                    
         stdout.write(Renderer.screen)
         stdout.flush()
