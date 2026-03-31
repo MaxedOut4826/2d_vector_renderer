@@ -12,7 +12,8 @@ class Renderer:
         if (0 > x or x > SCREEN_SIZE[0] - 1 or 0 > y or y > SCREEN_SIZE[1] - 1): return
             
         data = 1 if y % 2 == 0 else 2
-        y = y // 2
+        x = int(x)
+        y = int(y // 2)
         pixel = Renderer.screen_data[y][x]
         
         bit: str = CELL_VALUES[data | CELL_VALUES.index(pixel)]

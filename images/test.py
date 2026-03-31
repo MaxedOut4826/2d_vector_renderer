@@ -20,7 +20,6 @@ from . import Shape
 #                (47, 37), (47, 32),
 #                (44, 28), (42, 27), (37, 27), (34, 28), (33, 29)])
 
-
 #? RANDOM CURVES
 # points: list[tuple[int, int]] = []
 
@@ -31,7 +30,7 @@ from . import Shape
 
 
 #? HEART WITH CURVES
-Shape.curve([(32, 32), (25, 24), (17, 34)])
-Shape.curve([(32, 32), (39, 24), (47, 34)])
-Shape.curve([(17, 34), (17, 46), (32, 52)])
-Shape.curve([(47, 34), (47, 46), (32, 52)])
+Shape.curve([(32, 32), (25, 21), (17, 32)])
+Shape.curve([(32, 32), (39, 21), (47, 32)])
+Shape.curve([(17, 33), (17, 46), (32, 52)])
+Shape.curve([(47, 33), (47, 46), (32, 52)])

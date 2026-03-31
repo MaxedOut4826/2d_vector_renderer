@@ -48,7 +48,11 @@ class Shape:
             points.append(bezier(t, vectors))
                 
         Shape.polyline(points)
-        
+
+
+
+#! MUST ADD A 'PATH' METHOD TO CREATE A POLYLINE THAT ALLOWS CURVES 
+#! MUST ADD TESSELLATION TO MAKE SHAPES FILLABLE WHICH ALLOWS FOR STROKE SIZE
 
 #* Consider adding a 'move' method to displace a whole shape by a vector delta
 #* Will need to store shapes differently though

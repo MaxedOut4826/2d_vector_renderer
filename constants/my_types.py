@@ -13,3 +13,12 @@ class CircleParams(TypedDict):
 class RenderParams(TypedDict):
     lines: list[LineParams]
     circles: list[CircleParams]
+
+class Stroke:
+    move: int = 0
+    line: int = 1
+    curve: int = 2
+
+class StrokeParams(TypedDict):
+    type: Stroke
+    vector: Vector2
