@@ -5,10 +5,7 @@ class Shape:
     
     @staticmethod
     def line(start: Vector2, end: Vector2) -> None:
-        Shape.render_queue["lines"].append({
-                'start': start,
-                'end': end
-            })
+        Shape.render_queue["lines"].append([start, end])
     
     @staticmethod
     def polyline(lines: list[Vector2]) -> None:
@@ -25,8 +22,9 @@ class Shape:
             
     @staticmethod
     def rect(start: Vector2, size: Vector2) -> None:
+        w, h = size
         x0, y0 = start
-        x1, y1 = x0 + size[0], y0 + size[1]
+        x1, y1 = x0 + w, y0 + h
         
         Shape.polygon([(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
     
@@ -38,16 +36,16 @@ class Shape:
         })
         
     @staticmethod
-    def curve(vectors: list[Vector2]) -> None:
+    def curve(points: list[Vector2]) -> None:
         resolution: int = 8
         
-        points: list[Vector2] = []
+        vertices: list[Vector2] = []
         for i in range(0, resolution):
             t = i / (resolution - 1)
             
-            points.append(bezier(t, vectors))
+            vertices.append(bezier(t, points))
                 
-        Shape.polyline(points)
+        Shape.polyline(vertices)
 
 
 

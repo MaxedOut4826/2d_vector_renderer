@@ -1,12 +1,13 @@
 from math import floor
 from sys import stdout
-from . import SCREEN_SIZE, CELL_VALUES, circle_symmetry, clear_screen, replace_chars
-from renderer.shapes import Shape
+from os import system as terminal, name as operation_system
+from render_pipeline.shapes import Shape
+from . import SCREEN_SIZE, CELL_VALUES, circle_symmetry, replace_chars
 
 class Renderer:
-    screen_data: list[str] = [CELL_VALUES[0] * SCREEN_SIZE[0]] * (floor(SCREEN_SIZE[1] / 2))
-    screen: str = ""
-        
+    frame_buffer: list[str] = [CELL_VALUES[0] * SCREEN_SIZE[0]] * (floor(SCREEN_SIZE[1] / 2))
+    frame: str = ""
+       
     @staticmethod
     def draw_pixel(x: int, y: int) -> None:
         if (0 > x or x > SCREEN_SIZE[0] - 1 or 0 > y or y > SCREEN_SIZE[1] - 1): return
@@ -14,11 +15,12 @@ class Renderer:
         data = 1 if y % 2 == 0 else 2
         x = int(x)
         y = int(y // 2)
-        pixel = Renderer.screen_data[y][x]
+        pixel = Renderer.frame_buffer[y][x]
         
         bit: str = CELL_VALUES[data | CELL_VALUES.index(pixel)]
         
-        Renderer.screen_data[y] = replace_chars(Renderer.screen_data[y], bit, x, 1)
+        Renderer.frame_buffer[y] = replace_chars(Renderer.frame_buffer[y], bit, x, 1)
+                    
                     
     # Bresenham's Line Algorithm
     @staticmethod
@@ -46,6 +48,7 @@ class Renderer:
                 err += dx
                 y0 += sy
                 
+                
     # Middlepoint Circle Algorithm
     @staticmethod
     def draw_circle(cx: int, cy: int, r: int) -> None:
@@ -65,20 +68,41 @@ class Renderer:
                 t1 = t2
                 x = x - 1
     
+    
     @staticmethod
-    def draw_screen():
-        clear_screen()        
+    def draw_frame():
+        Renderer.clear_frame()
         for line in Shape.render_queue["lines"]:
-            x0, y0 = line["start"]
-            x1, y1 = line["end"]
+            x0, y0 = line[0]
+            x1, y1 = line[1]
+            
             Renderer.draw_line(x0, y0, x1, y1)
             
         for circle in Shape.render_queue["circles"]:
             cx, cy = circle["centre"]
+            
             Renderer.draw_circle(cx, cy, circle["radius"])
                     
-        for xy in Renderer.screen_data:
-            Renderer.screen += "".join(xy) + "\n"
+        for xy in Renderer.frame_buffer:
+            Renderer.frame += "".join(xy) + "\n"
                     
-        stdout.write(Renderer.screen)
+        stdout.write(Renderer.frame)
         stdout.flush()
+        
+        
+    @staticmethod
+    def clear_frame():
+        if operation_system == "nt":
+            terminal("cls")
+        else:
+            terminal("clear")
+            
+            
+            
+#! ADD DYNAMIC FRAME RESIZING
+
+#! IMPORTANT ANSI COMMANDS FOR REPEATED FRAME GENERATION OPTIMISATION:
+#* "\033[H"  <--- Move Cursor to Top Left (GOOD TO OVERRIDE PREVIOUS TEXT)
+#* "\033[2J"  <--- Clear Screen (MUST USE)
+#* "\033[?25l"  <--- Hide Cursor (USEFUL)
+#* "\033[?25h"  <--- Show Cursor

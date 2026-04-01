@@ -1,8 +1,8 @@
 from images import index
-from renderer.render_handler import Renderer
+from render_pipeline.render_handler import Renderer
 
 def main():
-    Renderer.draw_screen()
+    Renderer.draw_frame()
     return
 
 if __name__ == "__main__":

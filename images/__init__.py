@@ -1,1 +1,1 @@
-from renderer.shapes import Shape
+from render_pipeline.shapes import Shape
